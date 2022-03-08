@@ -35,8 +35,12 @@ def get_jobs():
     )
 
 
-@blueprint.route('/api/jobs/<int:job_id>')
+@blueprint.route('/api/jobs/<job_id>')
 def get_job(job_id):
+
+    if not job_id.isdigit():
+        return make_response(jsonify({'error': 'id must be an integer'}), 404)
+
     db_sess = db_session.create_session()
     job = db_sess.query(Jobs).filter(Jobs.id == job_id).first()
     all_attributes = (
