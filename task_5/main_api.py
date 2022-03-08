@@ -67,6 +67,8 @@ def add_jobs():
     db_sess.add(job)
     db_sess.commit()
 
+    return make_response(jsonify({'info': ' successfully'}), 200)
+
 
 @blueprint.route('/api/jobs/<job_id>')
 def get_job(job_id):
