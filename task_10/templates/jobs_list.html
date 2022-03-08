@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-center mt-3">
+    <div class="flex-column">
+        {% if jobs|length == 0 %}
+            <h1 class="text-center">No jobs anymore</h1>
+            <table class="table table-striped">
+
+                    <thead>
+                        <tr>
+                            <th scope="col">Описание работы</th>
+                            <th scope="col">Тимлид</th>
+                            <th scope="col">Объём работы</th>
+                            <th scope="col">Список сотрудников</th>
+                            <th scope="col">Завершена</th>
+                        </tr>
+                    </thead>
+
+            </table>
+        {% else %}
+            <h1 class="text-center">Works log</h1>
+            <table class="table table-striped">
+
+                <thead>
+                    <tr>
+                        <th scope="col">Описание работы</th>
+                        <th scope="col">Тимлид</th>
+                        <th scope="col">Объём работы</th>
+                        <th scope="col">Список сотрудников</th>
+                        <th scope="col">Завершена</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for job in jobs %}
+                        <tr>
+                            <td>{{ job.job }}</td>
+                            <td>{{ job.user.surname }} {{ job.user.name }}</td>
+                            <td>{{ job.work_size }} hours</td>
+                            <td>{{ job.collaborators }}</td>
+                            <td>{{ job.is_finished }}</td>
+                            <td>
+                                <div>
+                                    <a class="btn btn-warning" href="/job/{{ job.id }}">Изменить</a>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <a class="btn btn-danger" href="/job_delete/{{ job.id }}">Удалить</a>
+                                </div>
+                            </td>
+                        </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+        <div>
+            <a class="btn btn-success mt-3" href="/add_job">Добавить задачу</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
